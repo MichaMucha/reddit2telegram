@@ -1,0 +1,21 @@
+name: msg_proc
+channels:
+  - derickl
+  - conda-forge
+dependencies:
+  - python>=3.7
+  - pandas
+  - numpy
+  - flask
+  - jsonnet
+  - jupyterlab
+  - ipywidgets
+  - nodejs
+  - pip:
+    - torch>=1.0.0
+    - torchvision
+    - fastai>=1.0
+    - allennlp
+    - sentencepiece
+    - spacy
+    - redis
