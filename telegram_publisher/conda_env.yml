@@ -11,4 +11,4 @@ dependencies:
     - python-dotenv
     - tqdm
     - fire
-    - asyncio_redis
+    - redis

@@ -1,0 +1,1 @@
+docker build -t miniconda3 - < ./Mother-docker

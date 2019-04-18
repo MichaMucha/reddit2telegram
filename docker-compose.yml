@@ -28,16 +28,18 @@ services:
     ports:
       - 6379:6379
 
-  # message_processor:
-  #   container_name: message_processor
-  #   build: ./message_processor
-  #   image: message_processor:latest
-  #   links:
-  #     - redis_db
-  #   depends_on: 
-  #     - redis_db
-  #   environment: 
-  #     REDIS_URL: redis_db
+  message_processor:
+    container_name: message_processor
+    build: ./message_processor
+    image: message_processor:latest
+    links:
+      - redis_db
+    depends_on: 
+      - redis_db
+    environment: 
+      REDIS_URL: redis_db
+    entrypoint: /bin/bash
+    command: -c "message_processor - serve_spacy_ner"
 
   telegram_publisher:
     build: ./telegram_publisher
@@ -53,6 +55,8 @@ services:
       - redis_db
     networks:
       - backend
+    entrypoint: /bin/bash
+    command: -c "python publisher.py publish processed"
 
 networks: 
   backend:
