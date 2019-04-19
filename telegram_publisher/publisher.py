@@ -24,11 +24,11 @@ async def push_update(content, bot):
 
 
 async def listen(source):
-    r_conn = redis.Redis()
+    r_conn = redis.Redis(REDIS_HOST)
     p = r_conn.pubsub(ignore_subscribe_messages=True)
     p.subscribe(source)
     for message in tqdm(p.listen()):
-        yield message
+        yield message['data']
 
 
 async def subscribe_and_listen(bot, channel_name='processed'):

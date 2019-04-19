@@ -1,7 +1,7 @@
 import ujson as json
 import spacy
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_md')
 
 def model(message):
     message = json.loads(message)

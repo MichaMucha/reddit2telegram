@@ -9,13 +9,15 @@ from dotenv import load_dotenv, find_dotenv
 from os import getenv
 from tqdm import tqdm
 load_dotenv(find_dotenv())
+
+REDIS_HOST = getenv('REDIS_URL', 'localhost')
 SUBREDDIT = getenv('SUBREDDIT')
 uvloop.install()
 
 def launch_pubsub_task(func: Callable, 
         source='comments', sink='processed', subprocess=False):
     async def pubsub_func():
-        r = redis.Redis()
+        r = redis.Redis(REDIS_HOST)
         async for message in listen(source):
             if message is StopAsyncIteration:
                 break
@@ -45,7 +47,7 @@ def launch_pubsub_task(func: Callable,
     
 
 async def listen(source):
-    r_conn = redis.Redis()
+    r_conn = redis.Redis(REDIS_HOST)
     p = r_conn.pubsub(ignore_subscribe_messages=True)
     p.subscribe(source)
     for message in tqdm(p.listen()):
